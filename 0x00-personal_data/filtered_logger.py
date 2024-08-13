@@ -12,4 +12,5 @@ def filter_datum(fields, redaction, message, separator):
     for field in fields:
         pattern_str = field + '=[^;]*'
         repl_str = field + '=' + redaction
-        print(re.sub(pattern_str, repl_str, message))
+        message = re.sub(pattern_str, repl_str, message)
+    return message
