@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
-"""returns the log message with obfuscated fields"""
+"""Returns the log message with obfuscated fields."""
 import logging
 import re
+from typing import List
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-def filter_datum(fields, redaction, message, separator):
-    """obfuscates log message fields"""
+def filter_datum(
+    fields: List[str],
+    redaction: str,
+    message: str,
+    separator: str
+) -> str:
+    """Obfuscates log message fields."""
     for field in fields:
-        pattern_str = field + '=[^;]*'
+        pattern_str = field + f'=[^{separator}]*'
         repl_str = field + '=' + redaction
         message = re.sub(pattern_str, repl_str, message)
     return message
