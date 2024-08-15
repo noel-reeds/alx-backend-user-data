@@ -2,7 +2,7 @@
 """Returns the log message with obfuscated fields."""
 import logging
 import re
-from typing import List
+import typing
 
 
 class RedactingFormatter(logging.Formatter):
@@ -19,7 +19,7 @@ class RedactingFormatter(logging.Formatter):
 
     def filter_datum(
         self,
-        fields: List[str],
+        fields: typing.List[str],
         redaction: str,
         message: str,
         separator: str
