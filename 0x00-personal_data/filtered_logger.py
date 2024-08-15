@@ -49,7 +49,7 @@ def get_logger() -> logging.Logger:
     """creates a custom logger"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
-    stream_handler = logging.streamHandler()
+    stream_handler = logging.StreamHandler()
     formatter = RedactingFormatter(fields=list(PII_FIELDS))
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
