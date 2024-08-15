@@ -4,19 +4,34 @@ import logging
 import re
 from typing import List
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+class RedactingFormatter(logging.Formatter):
+    """Redacting Formatter class."""
 
+    REDACTION = "***"
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    SEPARATOR = ";"
 
-def filter_datum(
-    fields: List[str],
-    redaction: str,
-    message: str,
-    separator: str
-) -> str:
-    """Obfuscates log message fields."""
-    for field in fields:
-        pattern_str = field + f'=[^{separator}]*'
-        repl_str = field + '=' + redaction
-        message = re.sub(pattern_str, repl_str, message)
-    return message
+    def __init__(self, fields):
+        """Instantiates log objects."""
+        super(RedactingFormatter, self).__init__(self.FORMAT)
+        self.fields = fields
+
+    def filter_datum(
+        self,
+        fields: List[str],
+        redaction: str,
+        message: str,
+        separator: str
+    ) -> str:
+        """Obfuscates log message fields."""
+        for field in fields:
+            pattern_str = field + f'=[^{separator}]*'
+            repl_str = field + '=' + redaction
+            message = re.sub(pattern_str, repl_str, message)
+        return message
+
+    def format(self, record: logging.LogRecord) -> str:
+        """Formats a log record."""
+        log_message = record.getMessage()
+        message = self.filter_datum(self.fields, self.REDACTION, log_message, self.SEPARATOR)
+        return message
