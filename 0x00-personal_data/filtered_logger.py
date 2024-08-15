@@ -46,6 +46,7 @@ class RedactingFormatter(logging.Formatter):
 
 
 def get_logger() -> logging.Logger:
+    """creates a custom logger"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     stream_handler = logging.streamHandler()
