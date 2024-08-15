@@ -4,6 +4,8 @@ import logging
 import re
 from typing import List
 
+PII_FIELDS = ('name', 'email', 'ssn', 'password', 'ip')
+
 
 class RedactingFormatter(logging.Formatter):
     """Redacting Formatter class."""
@@ -41,3 +43,12 @@ class RedactingFormatter(logging.Formatter):
             self.SEPARATOR)
         record.msg = obf_message
         return super().format(record)
+
+
+def get_logger() -> logging.Logger:
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    stream_handler = logging.streamHandler()
+    formatter = RedactingFormatter(fields=list(PII_FIELDS))
+    stream_handler.setFormatter(formatter)
+    logger.addHandler(stream_handler)
