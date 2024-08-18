@@ -58,7 +58,7 @@ def get_logger() -> logging.Logger:
     logger.propagate = False
 
 
-def get_db() -> connector:
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """returns a connector to a database"""
     environ = os.environ
     config = {
