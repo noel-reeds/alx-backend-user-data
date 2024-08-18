@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Returns the log message with obfuscated fields."""
 import logging
+import mysql.connector
+import os
 import re
 from typing import List
 
@@ -54,3 +56,16 @@ def get_logger() -> logging.Logger:
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
     logger.propagate = False
+
+
+def get_db() -> connector:
+    """returns a connector to a database"""
+    environ = os.environ
+    config = {
+        'user': environ['PERSONAL_DATA_DB_USERNAME'],
+        'password': environ['PERSONAL_DATA_DB_PASSWORD'],
+        'host': environ['PERSONAL_DATA_DB_HOST'],
+        'database': environ['PERSONAL_DATA_DB_NAME']
+    }
+    connector = mysql.connector.connect(**config)
+    return connector
