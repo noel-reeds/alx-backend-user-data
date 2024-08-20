@@ -66,5 +66,11 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         'host': os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
         'database': os.getenv('PERSONAL_DATA_DB_NAME')
     }
-    connector = mysql.connector.connect(**config)
-    return connector
+    if not config['database']:
+        raise ValueError
+    try:
+        connector = mysql.connector.connect(**config)
+        return connector
+    except mysql.connector.Error as err:
+        print(f'Error:' {err})
+        return None
