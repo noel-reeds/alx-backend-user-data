@@ -72,5 +72,5 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         connector = mysql.connector.connect(**config)
         return connector
     except mysql.connector.Error as err:
-        print(f'Error:' {err})
+        print(f'Error: {err}')
         return None
