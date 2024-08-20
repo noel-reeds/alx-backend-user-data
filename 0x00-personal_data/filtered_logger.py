@@ -60,11 +60,10 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """returns a connector to a database"""
-    environ = os.environ
     config = {
-        'user': 'root',
-        'password': '',
-        'host': 'localhost',
+        'user': os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'],
+        'password': environ['PERSONAL_DATA_DB_PASSWORD', ''],
+        'host': environ['PERSONAL_DATA_DB_HOST', 'localhost'],
         'database': environ['PERSONAL_DATA_DB_NAME']
     }
     connector = mysql.connector.connect(**config)
