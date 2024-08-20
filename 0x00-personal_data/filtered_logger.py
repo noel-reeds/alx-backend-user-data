@@ -56,6 +56,7 @@ def get_logger() -> logging.Logger:
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
     logger.propagate = False
+    return logger
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
@@ -74,3 +75,16 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     except mysql.connector.Error as err:
         print(f'Error: {err}')
         return None
+
+
+def main() -> None:
+    """retrieves rows from users"""
+    connector = get_db()
+    logger = get_logger()
+    cursor = connector.cursor()
+    res = cursor.execute(SELECT * FROM users)
+    users = res.fetchall()
+    for user in users:
+        logger(user)
+if __name__  == "__main__":
+    main()
