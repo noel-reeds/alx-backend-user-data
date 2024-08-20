@@ -68,8 +68,3 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     }
     connector = mysql.connector.connect(**config)
     return connector
-
-
-def main() -> None:
-    """NotImplementedErr"""
-    pass
