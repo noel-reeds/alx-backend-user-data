@@ -62,10 +62,15 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     """returns a connector to a database"""
     environ = os.environ
     config = {
-        'user': environ['PERSONAL_DATA_DB_USERNAME'],
-        'password': environ['PERSONAL_DATA_DB_PASSWORD'],
-        'host': environ['PERSONAL_DATA_DB_HOST'],
+        'user': 'root',
+        'password': '',
+        'host': 'localhost',
         'database': environ['PERSONAL_DATA_DB_NAME']
     }
     connector = mysql.connector.connect(**config)
     return connector
+
+
+def main() -> None:
+    """NotImplementedErr"""
+    pass
