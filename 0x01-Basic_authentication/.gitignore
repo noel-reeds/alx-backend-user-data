@@ -1,1 +1,4 @@
+.basic-auth/
+api/__pycache__/
+models/__pycache__/
 __MACOSX/
