@@ -8,7 +8,15 @@ class Auth:
     """Auth. class"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Require auth."""
-        return False
+        if not path or not excluded_paths or len(excluded_paths) == 0:
+            return True
+        path = path.strip('/')
+        for _path in excluded_paths:
+            excluded_paths[excluded_paths.index(_path)] = _path.strip('/')
+        if path not in excluded_paths:
+            return True
+        if path in excluded_paths:
+            return False
 
     def authorization_header(self, request=None) -> str:
         """Auth. Header"""
