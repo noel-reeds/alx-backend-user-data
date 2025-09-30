@@ -10,11 +10,9 @@ class Auth:
         """Require auth."""
         return False
 
-
     def authorization_header(self, request=None) -> str:
         """Auth. Header"""
         return None
-
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Current user"""
