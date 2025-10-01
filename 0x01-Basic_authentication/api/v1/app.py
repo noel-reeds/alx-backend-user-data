@@ -17,7 +17,10 @@ auth = None
 
 try:
     auth = os.environ.get("AUTH_TYPE")
-    if auth:
+    if auth == "basic_auth":
+        from api.v1.auth.basic_auth import BasicAuth
+        auth = BasicAuth()
+    else:
         from api.v1.auth.auth import Auth
         auth = Auth()
 except Exception as e:
