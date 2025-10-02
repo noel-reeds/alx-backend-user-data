@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Basic Auth. module"""
 import re
+import base64
 from .auth import Auth
 
 
@@ -15,5 +16,19 @@ class BasicAuth(Auth):
             assert authorization_header.startswith("Basic")
             assert re.match(r'\b\w+\s', authorization_header)
             return authorization_header.split(" ")[1]
+        except Exception as e:
+            return None
+
+    def decode_base64_authorization_header(
+            self, base64_authorization_header: str) -> str:
+        """Decodes Base64 Auth. Header"""
+        if not base64_authorization_header:
+            return None
+        if type(base64_authorization_header) != str:
+            return None
+        try:
+            d = base64.b64decode(base64_authorization_header)
+            assert base64.b64encode(d).decode() == base64_authorization_header
+            return base64.b64decode(base64_authorization_header).decode()
         except Exception as e:
             return None
