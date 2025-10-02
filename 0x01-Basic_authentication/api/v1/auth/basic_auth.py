@@ -41,7 +41,8 @@ class BasicAuth(Auth):
         if type(decoded_base64_authorization_header) != str:
             return (None, None)
         try:
-            assert re.match(r'^[^:]+:[^:]+$', decoded_base64_authorization_header)
+            authorization_header = decoded_base64_authorization_header
+            assert re.match(r'^[^:]+:[^:]+$', authorization_header)
             user_pass = decoded_base64_authorization_header.split(":")
             return (user_pass[0], user_pass[1])
         except Exception as e:
