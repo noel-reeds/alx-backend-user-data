@@ -66,4 +66,4 @@ class BasicAuth(Auth):
                 return None
             return user[0]
         except AttributeError as e:
-            return e
+            return None
