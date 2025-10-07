@@ -45,8 +45,8 @@ class BasicAuth(Auth):
             authorization_header = decoded_base64_authorization_header
             # match for exactly one ":" in auth header
             assert re.match(r'^[^:]+:[^:]+$', authorization_header)
-            user_pass = decoded_base64_authorization_header.split(":")
-            return (user_pass[0], user_pass[1])
+            user_creds = tuple(decoded_base64_authorization_header.split(":"))
+            return user_creds
         except Exception as e:
             return (None, None)
 
