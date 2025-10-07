@@ -2,6 +2,7 @@
 """Basic Auth. module"""
 import re
 import base64
+from models.user import User
 from .auth import Auth
 
 
@@ -42,8 +43,22 @@ class BasicAuth(Auth):
             return (None, None)
         try:
             authorization_header = decoded_base64_authorization_header
+            # match for exactly one ":" in auth header
             assert re.match(r'^[^:]+:[^:]+$', authorization_header)
             user_pass = decoded_base64_authorization_header.split(":")
             return (user_pass[0], user_pass[1])
         except Exception as e:
             return (None, None)
+
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str) -> TypeVar('User'):
+        """User interface from user email and passwd"""
+        if not user_email or type(user_email) != str:
+            return None
+        if not user_pwd or type(user_pwd) != str:
+            return None
+        if not User.search(user_email):
+            return None
+        if not User.is_valid_password(user_pwd):
+            return None
+        return User
