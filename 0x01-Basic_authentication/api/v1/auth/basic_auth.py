@@ -3,6 +3,7 @@
 import re
 import base64
 from models.user import User
+from typing import TypeVar
 from .auth import Auth
 
 
@@ -57,8 +58,12 @@ class BasicAuth(Auth):
             return None
         if not user_pwd or type(user_pwd) != str:
             return None
-        if not User.search(user_email):
-            return None
-        if not User.is_valid_password(user_pwd):
-            return None
-        return User
+        try:
+            user = User.search({"email": user_email})
+            if not user or len(User.all()) == 0:
+                return None
+            if not user[0].is_valid_password(user_pwd):
+                return None
+            return user[0]
+        except AttributeError as e:
+            return e
