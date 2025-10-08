@@ -1,4 +1,5 @@
-
+*.json
+main_*
 __pycache__/
 .basic-auth/
 api/v1/__pycache__/
