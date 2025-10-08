@@ -45,7 +45,7 @@ class BasicAuth(Auth):
         try:
             authorization_header = decoded_base64_authorization_header
             # match for exactly one ":" in auth header
-            assert re.match(r'^[^:]+:[.*]+$', authorization_header)
+            # assert re.match(r'^[^:]+:[.*]+$', authorization_header)
             creds = decoded_base64_authorization_header.split(":", maxsplit=1)
             return tuple(creds)
         except Exception as e:
@@ -59,12 +59,13 @@ class BasicAuth(Auth):
         if not user_pwd or type(user_pwd) != str:
             return None
         try:
-            user = User.search({"email": user_email})
-            if not user:
+            users = User.search({"email": user_email})
+            if not users:
                 return None
-            if not user[0].is_valid_password(user_pwd):
-                return None
-            return user[0]
+            for user in users:
+                if not user.is_valid_password(user_pwd):
+                    return None
+            return users
         except Exception as e:
             return None
 
