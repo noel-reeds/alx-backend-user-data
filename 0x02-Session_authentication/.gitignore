@@ -1,0 +1,8 @@
+*.json
+main_*
+__pycache__/
+.basic-auth/
+api/v1/__pycache__/
+api/v1/views/__pycache__/
+models/__pycache__/
+__MACOSX/
