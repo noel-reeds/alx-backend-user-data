@@ -10,8 +10,10 @@ class Auth:
         """Require auth."""
         if not path or not excluded_paths or len(excluded_paths) == 0:
             return True
-        path = path.strip('/')
         for _path in excluded_paths:
+            if _path.endswith("*") and _path.rstrip("*") in path:
+                return False
+            path = path.strip('/')
             excluded_paths[excluded_paths.index(_path)] = _path.strip('/')
         if path not in excluded_paths:
             return True
