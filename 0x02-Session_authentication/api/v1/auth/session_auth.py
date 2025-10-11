@@ -12,7 +12,7 @@ class SessionAuth(Auth):
         """Creates a session id for a user_id"""
         if not user_id:
             return None
-        if type(user_id) != str:
+        if type(user_id) is not str:
             return None
         session_id = uuid.uuid4()
         user_id_by_session_id[session_id] = user_id
