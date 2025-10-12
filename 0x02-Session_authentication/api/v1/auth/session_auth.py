@@ -26,7 +26,7 @@ class SessionAuth(Auth):
         if type(session_id) is not str:
             return None
         return self.user_id_by_session_id.get(session_id)
- 
+
     def current_user(self, request=None):
         """Use session_id for identifying a user"""
         session_id = self.session_cookie(request)
