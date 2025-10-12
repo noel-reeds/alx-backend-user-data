@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """New view for Session Authentication"""
-import os, inspect
+import os
 from models.user import User
 from api.v1.views import app_views
 from flask import jsonify, request, abort
@@ -16,14 +16,14 @@ def view_for_session_auth():
     credentials = {key: request.form.get(key) for key in keys}
     for k, v in credentials.items():
         if v == "" or v is None:
-            return jsonify({ "error": f"{k} missing" }), 400
+            return jsonify({"error": f"{k} missing"}), 400
     try:
         users = User.search({"email": credentials.get("email")})
         if not users:
-            return jsonify({ "error": "no user found for this email" }), 404
+            return jsonify({"error": "no user found for this email"}), 404
         for user in users:
             if not user.is_valid_password(credentials.get("password")):
-                return jsonify({ "error": "wrong password" }), 401
+                return jsonify({"error": "wrong password"}), 401
         from api.v1.app import auth
         user = next(iter(users))
         _my_session_id = auth.create_session(user.id)
