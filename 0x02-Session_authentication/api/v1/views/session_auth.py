@@ -33,3 +33,16 @@ def view_for_session_auth():
         return user
     except Exception as e:
         return None
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'])
+def logout_user():
+    """Delete session and logs out user
+    Return:
+      - True for success and False on error
+    """
+    from api.v1.app import auth
+    true_or_false = auth.destroy_session(request)
+    if not true_or_false:
+        return False, abort(404)
+    return jsonify({}), 200
