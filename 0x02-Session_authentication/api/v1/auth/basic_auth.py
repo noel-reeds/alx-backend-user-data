@@ -59,13 +59,12 @@ class BasicAuth(Auth):
         if not user_pwd or type(user_pwd) != str:
             return None
         try:
-            users = User.search({"email": user_email})
-            if not users:
+            user = next(iter(User.search({"email": user_email})))
+            if not user:
                 return None
-            for user in users:
-                if not user.is_valid_password(user_pwd):
-                    return None
-            return users
+            if not user.is_valid_password(user_pwd):
+                return None
+            return user
         except Exception as e:
             return None
 
