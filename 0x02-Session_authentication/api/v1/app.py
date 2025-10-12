@@ -43,12 +43,12 @@ def before_request():
     ]
     if not auth.require_auth(request.path, paths):
         return
-    if not auth.authorization_header(request):
+    if not auth.authorization_header(request) and not auth.session_cookie(request):
         abort(401)
     if not auth.current_user(request):
         abort(403)
     if auth.authorization_header(request) and auth.session_cookie(request):
-        abort(401)
+        return None, abort(401)
     request.current_user = auth.current_user(request)
 
 
