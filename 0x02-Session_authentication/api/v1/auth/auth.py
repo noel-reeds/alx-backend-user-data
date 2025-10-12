@@ -37,5 +37,6 @@ class Auth:
         """Returns a cookie value from a request"""
         if not request:
             return None
-        _my_session_id = request.cookies.get("_my_session_id")
-        return _my_session_id
+        _my_session_id = os.environ.get("SESSION_NAME")
+        value_of_session_cookie = request.cookies.get(_my_session_id)
+        return value_of_session_cookie
