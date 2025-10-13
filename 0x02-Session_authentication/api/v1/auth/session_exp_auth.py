@@ -38,8 +38,9 @@ class SessionExpAuth(SessionAuth):
             return None
         if session_id not in self.user_id_by_session_id:
             return None
+        user_id = self.user_id_by_session_id.get(session_id).get("user_id")
         if self.session_duration <= 0:
-            return "user_id"
+            return user_id
         created_at = self.user_id_by_session_id.get(
                 session_id).get("created_at")
         if not created_at:
@@ -47,4 +48,4 @@ class SessionExpAuth(SessionAuth):
         td = dt.timedelta(seconds=self.session_duration)
         if created_at + td < dt.datetime.now():
             return None
-        return self.user_id_by_session_id.get(session_id).get("user_id")
+        return user_id
