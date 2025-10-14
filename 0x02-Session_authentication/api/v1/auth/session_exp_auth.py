@@ -22,7 +22,6 @@ class SessionExpAuth(SessionAuth):
         session_id = super().create_session(user_id)
         if not session_id:
             return None
-        # readable but time inefficient, use d[k] = v over this.
         try:
             self.user_id_by_session_id[session_id] = {}
             self.user_id_by_session_id[session_id]["user_id"] = user_id
