@@ -43,5 +43,5 @@ class SessionDBAuth(SessionExpAuth):
         if not user_id:
             return False
         del self.user_id_by_session_id[session_id]
-        self.remove()
+        UserSession(self).remove()
         return True
