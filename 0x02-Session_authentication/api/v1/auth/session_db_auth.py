@@ -34,6 +34,7 @@ class SessionDBAuth(SessionExpAuth):
 
     def destroy_session(self, request=None):
         """destroys the UserSession based on the session_id"""
+        super().__init__()
         if not request:
             return False
         session_id = self.session_cookie(request)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ Module of Users views
 """
+from datetime import timedelta, datetime as dt
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
@@ -27,10 +28,12 @@ def view_one_user(user_id: str = None) -> str:
     """
     if user_id is None:
         abort(404)
-    if user_id == "me" and request.current_user is None:
+    _user = request.current_user
+    if user_id == "me" and _user is None:
         abort(404)
-    if user_id == "me" and request.current_user:
-        return request.current_user.to_json()
+    if user_id == "me" and _user:
+        # destroy sessions here.
+        return _user.to_json()
     user = User.get(user_id)
     if user is None:
         abort(404)
