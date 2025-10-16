@@ -32,7 +32,7 @@ class SessionDBAuth(SessionExpAuth):
         except Exception as e:
             return None
 
-    def destroy_session(self, request=None):
+    def destroy_session(self, request=None) -> bool:
         """destroys the UserSession based on the session_id"""
         super().__init__()
         if not request:
