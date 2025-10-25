@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Declarative mapping of user model"""
+"""User module"""
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
