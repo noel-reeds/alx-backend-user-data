@@ -47,3 +47,15 @@ class DB:
             raise e
         except InvalidRequestError as e:
             raise e
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Updates a user"""
+        user = self.find_user_by(id=user_id)
+        if kwargs:
+            try:
+                for k, v in kwargs.items():
+                    user.k = v
+                self._session.commit()
+            except ValueError as e:
+                raise e
+        return None
