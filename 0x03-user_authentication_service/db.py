@@ -53,8 +53,13 @@ class DB:
         user = self.find_user_by(id=user_id)
         if kwargs:
             try:
+                if not user:
+                    raise ValueError
                 for k, v in kwargs.items():
-                    user.k = v
+                    if k in user.__dict__.keys():
+                        user.k = v
+                    else:
+                        raise ValueError
                 self._session.commit()
             except ValueError as e:
                 raise e
