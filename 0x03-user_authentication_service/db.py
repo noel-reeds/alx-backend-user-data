@@ -56,8 +56,8 @@ class DB:
                 if not user:
                     raise ValueError
                 for k, v in kwargs.items():
-                    if k in user.__dict__.keys():
-                        user.k = v
+                    if hasattr(user, k):
+                        setattr(user, k, v)
                     else:
                         raise ValueError
                 self._session.commit()
