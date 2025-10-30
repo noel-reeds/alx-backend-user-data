@@ -33,7 +33,8 @@ class Auth:
         """Validates user credentials"""
         try:
             user = self._db.find_user_by(email=email)
-            if user and bcrypt.checkpw(password.encode(), user.hashed_password):
+            valid = bcrypt.checkpw(password.encode(), user.hashed_password)
+            if user and valid:
                 return True
             return False
         except NoResultFound as e:
