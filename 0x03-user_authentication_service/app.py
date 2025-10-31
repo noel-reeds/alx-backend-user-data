@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Application module"""
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request, abort, make_response, redirect
 from auth import Auth
 
 app = Flask(__name__)
@@ -40,6 +40,23 @@ def login():
         return _resp
     except Exception as e:
         abort(401)
+
+
+@app.route("/sessions", methods=['DELETE'], strict_slashes=False)
+def logout():
+    """Logs out an active user"""
+    try:
+        session_id = request.cookies.get("session_id")
+        if not session_id:
+            raise ValueError
+        user = auth.get_user_from_session_id(session_id)
+        if user:
+            auth.destroy_session(user.id)
+            return redirect("/")
+        else:
+            abort(403)
+    except Exception as e:
+        abort(403)
 
 
 if __name__ == "__main__":
