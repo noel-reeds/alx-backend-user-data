@@ -33,7 +33,7 @@ def login():
         password = request.form.get("password", None)
         valid_credentials = auth.valid_login(email, password)
         if not valid_credentials:
-            raise Exception
+            raise ValueError
         session_id = auth.create_session(email)
         _resp = make_response({"email": email, "message": "logged in"})
         _resp.set_cookie("session_id", session_id)
