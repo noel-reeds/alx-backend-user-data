@@ -33,7 +33,9 @@ def view_one_user(user_id: str = None) -> str:
         abort(404)
     if user_id == "me" and _user:
         # destroy sessions here.
-        return _user.to_json()
+        if _user.session_duration = 0:
+            return _user.to_json()
+        
     user = User.get(user_id)
     if user is None:
         abort(404)
