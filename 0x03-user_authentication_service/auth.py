@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import bcrypt
 import uuid
+from typing import Optional
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -56,3 +57,13 @@ class Auth:
             return user.session_id
         except NoResultFound as e:
             return
+
+    def get_user_from_session_id(self, session_id: str) -> Optional[str]:
+        """Retrieve user from session id"""
+        if not session_id:
+            return None
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except Exception as e:
+            return None
