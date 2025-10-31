@@ -24,6 +24,7 @@ def users():
     except ValueError as e:
         return jsonify({"message": "email already registered"}), 400
 
+
 @app.route("/sessions", methods=['POST'], strict_slashes=False)
 def login():
     """Logs in a user"""
